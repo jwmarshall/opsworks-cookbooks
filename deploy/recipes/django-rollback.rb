@@ -1,7 +1,7 @@
 node[:deploy].each do |application, deploy|
 
-  if deploy[:application_type] != 'custom'
-    Chef::Log.debug("Skipping deploy::django-rollback application #{application} as it is not a 'custom' app")
+  if deploy[:application_type] != 'other'
+    Chef::Log.debug("Skipping deploy::django-rollback application #{application} as it is not of type 'other'")
     next
   end
 
