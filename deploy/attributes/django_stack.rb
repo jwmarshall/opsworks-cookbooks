@@ -1,7 +1,7 @@
-default[:opsworks][:django_stack][:name] = "uwsgi"
+default[:opsworks][:django_stack][:name] = "nginx_uwsgi"
 case node[:opsworks][:django_stack][:name]
-when "uwsgi"
-  default[:opsworks][:django_stack][:recipe] = "uwsgi::django"
+when "nginx_uwsgi"
+  default[:opsworks][:django_stack][:recipe] = "django::deploy"
   default[:opsworks][:django_stack][:needs_reload] = true
   default[:opsworks][:django_stack][:service] = 'uwsgi'
   default[:opsworks][:django_stack][:restart_command] = 'touch tmp/restart.txt'
