@@ -33,28 +33,13 @@ node[:deploy].each do |application, deploy|
     default[:deploy][application][:rake] = 'rake'
   end
 
-  if File.exists?('/usr/local/bin/pip')
-    default[:deploy][application][:pip] = '/usr/local/bin/pip'
-  else
-    default[:deploy][application][:pip] = 'pip'
-  end
-
   default[:deploy][application][:migrate] = false
 
-  if deploy[:application_type] == 'rails'
-    if node[:deploy][application][:auto_bundle_on_deploy]
-      default[:deploy][application][:migrate_command] = "if [ -f Gemfile ]; then echo 'OpsWorks: Gemfile found - running migration with bundle exec' && /usr/local/bin/bundle exec #{node[:deploy][application][:rake]} db:migrate; else echo 'OpsWorks: no Gemfile - running plain migrations' && #{node[:deploy][application][:rake]} db:migrate; fi"
-    else
-      default[:deploy][application][:migrate_command] = "#{node[:deploy][application][:rake]} db:migrate"
-    end
-  elsif deploy[:application_type] == 'other'
-    if node[:deploy][application][:auto_pip_install_on_deploy]
-      default[:deploy][application][:migrate_command] = "if [ -f requirements.txt]; then echo 'OpsWorks: requirements.txt found - running migration with pip install' && #{node[:deploy][application][:pip]} install -r requiremnts.txt; else echo 'OpsWorks: no requirements.txt - running plain migrations' && python #{node[:deploy][application][:current_path]}/#{application}/manage.py migrate; fi"
-    else
-      default[:deploy][application][:migrate_command] = "python #{node[:deploy][application][:current_path]}/#{application}/manage.py migrate"
-    end
+  if node[:deploy][application][:auto_bundle_on_deploy]
+    default[:deploy][application][:migrate_command] = "if [ -f Gemfile ]; then echo 'OpsWorks: Gemfile found - running migration with bundle exec' && /usr/local/bin/bundle exec #{node[:deploy][application][:rake]} db:migrate; else echo 'OpsWorks: no Gemfile - running plain migrations' && #{node[:deploy][application][:rake]} db:migrate; fi"
+  else
+    default[:deploy][application][:migrate_command] = "#{node[:deploy][application][:rake]} db:migrate"
   end
-
   default[:deploy][application][:rails_env] = 'production'
   default[:deploy][application][:action] = 'deploy'
   default[:deploy][application][:user] = node[:opsworks][:deploy_user][:user]
