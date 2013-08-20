@@ -1,5 +1,6 @@
 include_attribute 'deploy::logrotate'
 include_attribute 'deploy::rails_stack'
+include_attribute 'deploy::django_stack'
 
 default[:opsworks][:deploy_user][:shell] = '/bin/bash'
 default[:opsworks][:deploy_user][:user] = 'deploy'
