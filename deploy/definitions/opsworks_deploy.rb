@@ -139,6 +139,10 @@ define :opsworks_deploy do
           if deploy[:auto_npm_install_on_deploy]
             OpsWorks::NodejsConfiguration.npm_install(application, node[:deploy][application], release_path)
           end
+        elseif deploy[:application_type] == 'other'
+          if deploy[:auto_pip_install_on_deploy]
+            OpsWorks::DjangoConfiguration.pip_install(application, node[:deploy][application], release_path)
+          end
         end
 
         # run user provided callback file
