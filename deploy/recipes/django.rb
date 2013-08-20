@@ -3,6 +3,7 @@ include_recipe 'deploy'
 node[:deploy].each do |application, deploy|
 
   if deploy[:application_type] != 'custom'
+    Chef::Log.debug("Application type is: #{deploy[:application_type]}"
     Chef::Log.debug("Skipping deploy::django application #{application} as it is not a 'custom' app")
     next
   end
