@@ -31,7 +31,7 @@ module OpsWorks
       end
     end
 
-    def self.install_requirements(app_name, app_config, app_root_path)
+    def self.pip_install(app_name, app_config, app_root_path)
       if File.exists?("#{app_root_path}/requirements.txt")
         Chef::Log.info("Requirements file detected. Running pip install.")
         Chef::Log.info("sudo su deploy -c 'cd #{app_root_path} && /usr/local/bin/pip install -r requirements.txt'")
