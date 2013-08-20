@@ -1,0 +1,10 @@
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.<%= @database[:adapter] %>',
+        'NAME': '<%= @database[:database] %>',
+        'USER': '<%= @database[:username] %>',
+        'PASSWORD': '<%= @database[:password] %>',
+        'HOST': '<%= @database[:host] %>',
+        'PORT': '<%= @database[:port] %>',
+    }
+}
